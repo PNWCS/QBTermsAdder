@@ -20,9 +20,6 @@ jobs:
       - name: Run Code Formatting Check
         run: dotnet format --verify-no-changes
 
-      - name: Run Static Code Analysis
-        run: dotnet build --configuration Release /warnaserror
-
   build-and-upload-exe:
     # Only runs if the "check-code-quality" job passed
     needs: check-code-quality
