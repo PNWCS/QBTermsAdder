@@ -1,0 +1,46 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-code-quality:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'  # Adjust if using a different .NET version
+
+      - name: Run Code Formatting Check
+        run: dotnet format --verify-no-changes
+
+      - name: Run Static Code Analysis
+        run: dotnet build --configuration Release /warnaserror
+
+  build-and-upload-exe:
+    # Only runs if the "check-code-quality" job passed
+    needs: check-code-quality
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build and Publish Executable
+        run: dotnet publish CICD_CLI/CICD_CLI.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true -o out
+
+      - name: Upload EXE Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: QBReadPaymentTerms-Exe
+          path: out
