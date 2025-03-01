@@ -1,6 +1,6 @@
-﻿using QBFC16Lib;
+using QBFC16Lib;
 using Serilog;
-
+// testing file update
 namespace QB_Terms_Lib
 {
     public class TermsReader
