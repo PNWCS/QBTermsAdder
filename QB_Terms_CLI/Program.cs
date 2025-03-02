@@ -33,7 +33,9 @@ namespace qb_payment
                     foreach (var row in rows.Skip(1)) // Skip header row
                     {
                         string name = row.Cell(1).GetString().Trim();  // Column "Name"
-                        int companyID = row.Cell(2).GetValue<int>();   // Column "ID"
+                        int companyID = row.Cell(2).GetValue<int>();
+                        Console.WriteLine($"{name}");
+                        Console.WriteLine(companyID);// Column "ID"
 
                         companyTerms.Add(new PaymentTerm(name, companyID));
                     }
@@ -41,12 +43,12 @@ namespace qb_payment
             }
 
             List<PaymentTerm> terms = TermsComparator.CompareTerms(companyTerms);
-            foreach(var term in terms)
+            foreach (var term in terms)
             {
                 Console.WriteLine($"Term {term.Name} has the {term.Status} Status");
             }
 
-            Console.WriteLine("Data Sync Completed"); 
+            Console.WriteLine("Data Sync Completed");
         }
 
     }
