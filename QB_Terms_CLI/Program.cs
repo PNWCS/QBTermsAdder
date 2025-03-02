@@ -41,7 +41,7 @@ namespace qb_payment
             }
 
             List<PaymentTerm> terms = TermsComparator.CompareTerms(companyTerms);
-            foreach(var term in terms)
+            foreach (var term in terms)
             {
                 Console.WriteLine($"Term {term.Name} has the {term.Status} Status");
             }
