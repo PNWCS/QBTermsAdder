@@ -16,59 +16,82 @@ namespace QB_Terms_Lib
             // Read QB terms
             List<PaymentTerm> qbTerms = TermsReader.QueryAllTerms();
 
-            // Group qbTerms by Company_ID to avoid duplicates and use the first term for each key.
-            var qbTermDict = qbTerms
-                .GroupBy(t => t.Company_ID)
-                .ToDictionary(g => g.Key, g => g.First());
+            // Convert QuickBooks and Company terms into dictionaries for quick lookup
+            var qbTermDict = new Dictionary<int, PaymentTerm>();
 
-            // Assume companyTerms are unique by Company_ID.
-            var companyTermDict = companyTerms.ToDictionary(t => t.Company_ID);
+            foreach (var term in qbTerms)
+            {
+                qbTermDict[term.Company_ID] = term; // Add new term
 
-            // Use a dictionary to merge results without duplicates.
-            var resultTerms = new Dictionary<int, PaymentTerm>();
+            }
 
-            // Compare each company term with the corresponding QB term.
+            var companyTermDict = new Dictionary<int, PaymentTerm>();
+
+            foreach (var term in companyTerms)
+            {
+                companyTermDict[term.Company_ID] = term; // Last duplicate overwrites previous one
+            }
+
+            List<PaymentTerm> newTermsToAdd = new List<PaymentTerm>();
+
+            // Iterate through company terms to compare with QB terms
             foreach (var companyTerm in companyTerms)
             {
                 if (qbTermDict.TryGetValue(companyTerm.Company_ID, out var qbTerm))
                 {
-                    // If term exists in QB, compare names.
-                    companyTerm.Status = qbTerm.Name == companyTerm.Name
-                        ? PaymentTermStatus.Unchanged
-                        : PaymentTermStatus.Different;
-                    resultTerms[companyTerm.Company_ID] = companyTerm;
+                    // Term exists in both, compare names
+                    if (qbTerm.Name == companyTerm.Name)
+                    {
+                        companyTerm.Status = PaymentTermStatus.Unchanged;
+                    }
+                    else
+                    {
+                        companyTerm.Status = PaymentTermStatus.Different;
+                    }
                 }
                 else
                 {
-                    // Term is not in QB, mark it as Added.
-                    companyTerm.Status = PaymentTermStatus.Added;
-                    resultTerms[companyTerm.Company_ID] = companyTerm;
+                    // Term does not exist in QB, queue for addition
+                    newTermsToAdd.Add(companyTerm);
                 }
             }
 
-            // For QB terms that don't appear in the company list, mark them as Missing.
-            foreach (var qbTerm in qbTerms.GroupBy(t => t.Company_ID).Select(g => g.First()))
+            // Check for terms that exist in QB but not in the company file
+            foreach (var qbTerm in qbTerms)
             {
                 if (!companyTermDict.ContainsKey(qbTerm.Company_ID))
                 {
                     qbTerm.Status = PaymentTermStatus.Missing;
-                    resultTerms[qbTerm.Company_ID] = qbTerm;
                 }
             }
 
-            // Add new terms to QuickBooks.
-            var newTermsToAdd = resultTerms.Values
-                .Where(t => t.Status == PaymentTermStatus.Added)
-                .ToList();
+            // Call TermsAdder to add new terms to QuickBooks
             if (newTermsToAdd.Count > 0)
             {
                 TermsAdder.AddTerms(newTermsToAdd);
+
+                // Ensure `Added` terms are updated in `companyTermDict`
+                foreach (var addedTerm in newTermsToAdd)
+                {
+                    if (companyTermDict.TryGetValue(addedTerm.Company_ID, out var companyTerm))
+                    {
+                        companyTerm.Status = addedTerm.Status;
+                    }
+                }
             }
 
+            // Merge `companyTermDict` with `qbTermDict` (removing duplicates)
+            Dictionary<int, PaymentTerm> mergedTermsDict = new Dictionary<int, PaymentTerm>();
+
+            foreach (var term in qbTermDict.Values)
+                mergedTermsDict[term.Company_ID] = term; // Add all QB terms
+
+            foreach (var term in companyTermDict.Values)
+                mergedTermsDict[term.Company_ID] = term; // Overwrite with company terms
+
+            // Convert merged dictionary back to a list
             Log.Information("TermsComparator Completed");
-            return resultTerms.Values.ToList();
+            return mergedTermsDict.Values.ToList();
         }
-
-
     }
 }
