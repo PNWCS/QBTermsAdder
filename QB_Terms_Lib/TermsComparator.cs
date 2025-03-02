@@ -17,8 +17,20 @@ namespace QB_Terms_Lib
             List<PaymentTerm> qbTerms = TermsReader.QueryAllTerms();
 
             // Convert QuickBooks and Company terms into dictionaries for quick lookup
-            var qbTermDict = qbTerms.ToDictionary(t => t.Company_ID, t => t);
-            var companyTermDict = companyTerms.ToDictionary(t => t.Company_ID, t => t);
+            var qbTermDict = new Dictionary<int, PaymentTerm>();
+
+            foreach (var term in qbTerms)
+            {
+                qbTermDict[term.Company_ID] = term; // Add new term
+
+            }
+
+            var companyTermDict = new Dictionary<int, PaymentTerm>();
+
+            foreach (var term in companyTerms)
+            {
+                companyTermDict[term.Company_ID] = term; // Last duplicate overwrites previous one
+            }
 
             List<PaymentTerm> newTermsToAdd = new List<PaymentTerm>();
 
