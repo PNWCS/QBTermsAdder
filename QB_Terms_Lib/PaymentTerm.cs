@@ -1,4 +1,4 @@
-﻿﻿namespace QB_Terms_Lib
+﻿namespace QB_Terms_Lib
 {
     public class PaymentTerm
     {

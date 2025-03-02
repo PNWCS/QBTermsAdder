@@ -4,7 +4,7 @@ namespace QB_Terms_Lib
 {
     public static class LoggerConfig
     {
-        private static bool _isInitialized = true; // Ensures logging is set up only once
+        private static bool _isInitialized = false; // Ensures logging is set up only once
 
         public static void ConfigureLogging()
         {

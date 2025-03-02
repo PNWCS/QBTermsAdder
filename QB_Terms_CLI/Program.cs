@@ -1,4 +1,4 @@
-﻿﻿using System.Data;
+﻿using System.Data;
 using ClosedXML.Excel;
 using QB_Terms_Lib;
 
