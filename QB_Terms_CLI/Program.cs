@@ -46,7 +46,7 @@ namespace qb_payment
                 Console.WriteLine($"Term {term.Name} has the {term.Status} Status");
             }
 
-            Console.WriteLine("Data Sync Completed"); 
+            Console.WriteLine("Data Sync Completed");
         }
 
     }

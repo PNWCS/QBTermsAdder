@@ -9,7 +9,7 @@
 
         public PaymentTerm(string name, int companyID) {
             QB_ID = string.Empty;
-            Name = name; 
+            Name = name;
             Company_ID = companyID;
             Status = PaymentTermStatus.Unknown;
         }
