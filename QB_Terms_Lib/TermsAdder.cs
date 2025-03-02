@@ -13,7 +13,7 @@ namespace QB_Terms_Lib
 
             try
             {
-                // Create the session Manager object
+             
                 sessionManager = new QBSessionManager();
 
                 // Create the message set request object to hold our request
