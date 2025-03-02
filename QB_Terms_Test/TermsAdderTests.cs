@@ -37,7 +37,7 @@ namespace QB_Terms_Test
 
                 // 2) Assert that it took less than time limit
                 Assert.True(elapsedMs < timeLimit,
-                    $"Adding {termCount} terms took {elapsedMs} ms, which exceeds {timeLimit/1000} seconds.");
+                    $"Adding {termCount} terms took {elapsedMs} ms, which exceeds {timeLimit / 1000} seconds.");
             }
             finally
             {
