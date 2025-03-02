@@ -7,9 +7,10 @@
         public int Company_ID { get; set; }
         public PaymentTermStatus Status { get; set; }
 
-        public PaymentTerm(string name, int companyID) {
+        public PaymentTerm(string name, int companyID)
+        {
             QB_ID = string.Empty;
-            Name = name; 
+            Name = name;
             Company_ID = companyID;
             Status = PaymentTermStatus.Unknown;
         }
