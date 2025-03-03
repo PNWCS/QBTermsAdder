@@ -1,5 +1,4 @@
-﻿using System.Data;
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
 using QB_Terms_Lib;
 
 namespace qb_payment
