@@ -1,6 +1,5 @@
 ﻿using QBFC16Lib;
 using System.Diagnostics;
-using Xunit;
 using QB_Terms_Lib; // Your library namespace
 
 namespace QB_Terms_Test
@@ -37,7 +36,7 @@ namespace QB_Terms_Test
 
                 // 2) Assert that it took less than time limit
                 Assert.True(elapsedMs < timeLimit,
-                    $"Adding {termCount} terms took {elapsedMs} ms, which exceeds {timeLimit/1000} seconds.");
+                    $"Adding {termCount} terms took {elapsedMs} ms, which exceeds {timeLimit / 1000} seconds.");
             }
             finally
             {
