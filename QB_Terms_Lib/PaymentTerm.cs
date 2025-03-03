@@ -6,7 +6,6 @@
         public string Name { get; set; }
         public int Company_ID { get; set; }
         public PaymentTermStatus Status { get; set; }
-
         public PaymentTerm(string name, int companyID) {
             QB_ID = string.Empty;
             Name = name; 
