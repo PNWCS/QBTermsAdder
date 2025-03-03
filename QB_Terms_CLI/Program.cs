@@ -1,5 +1,4 @@
-﻿using System.Data;
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
 using QB_Terms_Lib;
 
 namespace qb_payment
@@ -41,12 +40,12 @@ namespace qb_payment
             }
 
             List<PaymentTerm> terms = TermsComparator.CompareTerms(companyTerms);
-            foreach(var term in terms)
+            foreach (var term in terms)
             {
                 Console.WriteLine($"Term {term.Name} has the {term.Status} Status");
             }
 
-            Console.WriteLine("Data Sync Completed"); 
+            Console.WriteLine("Data Sync Completed");
         }
 
     }
