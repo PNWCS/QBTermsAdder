@@ -12,7 +12,7 @@ namespace QB_Terms_Test
         {
             const int termCount = 10;
             const int startingCompanyID = 100;
-            const int timeLimit = 5000; // 2 seconds
+            const int timeLimit = 2000; // 2 seconds
             List<PaymentTerm> termsToAdd = new List<PaymentTerm>();
 
             // Build a list of 100 random PaymentTerm objects
@@ -37,7 +37,7 @@ namespace QB_Terms_Test
 
                 // 2) Assert that it took less than time limit
                 Assert.True(elapsedMs < timeLimit,
-                    $"Adding {termCount} terms took {elapsedMs} ms, which exceeds {timeLimit/1000} seconds.");
+                    $"Adding {termCount} terms took {elapsedMs} ms, which exceeds {timeLimit / 1000} seconds.");
             }
             finally
             {
