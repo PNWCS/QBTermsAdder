@@ -16,10 +16,10 @@ namespace QB_Terms_Test
             const int startId = 100;
             var initialTerms = new List<PaymentTerm>();
 
-            for (int j = 0; j < 5; j++)
+            for (int i = 0; i < 5; i++)
             {
                 string termName = "TestTerm_" + Guid.NewGuid().ToString("N").Substring(0, 8);
-                int companyId = startId + j;
+                int companyId = startId + i;
                 initialTerms.Add(new PaymentTerm(termName, companyId));
             }
 
