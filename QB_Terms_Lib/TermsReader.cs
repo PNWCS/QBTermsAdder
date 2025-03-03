@@ -1,4 +1,4 @@
-using QBFC16Lib;
+﻿using QBFC16Lib;
 using Serilog;
 // testing file update
 namespace QB_Terms_Lib
@@ -64,7 +64,7 @@ namespace QB_Terms_Lib
 
         static List<PaymentTerm> WalkStandardTermsQueryRs(IMsgSetResponse responseMsgSet)
         {
-            List<PaymentTerm > results = new List<PaymentTerm>();
+            List<PaymentTerm> results = new List<PaymentTerm>();
             if (responseMsgSet == null) return results;
             IResponseList responseList = responseMsgSet.ResponseList;
             if (responseList == null) return results;
