@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using QB_Terms_Lib; // Adjust to your actual namespace for TermsComparator, PaymentTerm, etc.
+﻿using QB_Terms_Lib; // Adjust to your actual namespace for TermsComparator, PaymentTerm, etc.
 using QBFC16Lib; // Needed for QuickBooks interaction
 
 namespace QB_Terms_Test
