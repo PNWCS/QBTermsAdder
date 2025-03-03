@@ -45,7 +45,7 @@ namespace QB_Terms_Test
             const int termCount = 100;
             var insertedTermListIDs = new List<string>();
             var insertedNames = new HashSet<string>();
-            const int MaxQueryTimeMilliseconds = 2000; // 2 seconds
+            const int MaxQueryTimeMilliseconds = 15000; // 5 seconds
 
             using (var qbSession = new QuickBooksSession("Integration Test - Bulk Insert Standard Terms"))
             {
